@@ -403,8 +403,9 @@ public final class BuildOperation: PackageStructureDelegate, SPMBuildCore.BuildS
         default:
             // FIXME: This is super unfortunate that we might need to load the package graph.
             let graph = try getPackageGraph()
+            let info = LLBuildManifestInfo.Info.from(graph)
             if let result = subset.llbuildTargetName(
-                for: graph,
+                for: info,
                    config: buildParameters.configuration.dirname,
                    observabilityScope: self.observabilityScope
             ) {
@@ -723,7 +724,7 @@ extension BuildDescription {
 
 extension BuildSubset {
     /// Returns the name of the llbuild target that corresponds to the build subset.
-    func llbuildTargetName(for graph: PackageGraph, config: String, observabilityScope: ObservabilityScope)
+    func llbuildTargetName(for info: LLBuildManifestInfo.Info, config: String, observabilityScope: ObservabilityScope)
         -> String?
     {
         switch self {
@@ -732,7 +733,7 @@ extension BuildSubset {
         case .allIncludingTests:
             return LLBuildManifestBuilder.TargetKind.test.targetName
         case .product(let productName):
-            guard let product = graph.allProducts.first(where: { $0.name == productName }) else {
+            guard let product = info.products.first(where: { $0.name == productName }) else {
                 observabilityScope.emit(error: "no product named '\(productName)'")
                 return nil
             }
@@ -745,15 +746,13 @@ extension BuildSubset {
                 )
                 return LLBuildManifestBuilder.TargetKind.main.targetName
             }
-            return observabilityScope.trap {
-                try product.getLLBuildTargetName(config: config)
-            }
+            return product.LLBuildTargetNameByConfig[config]
         case .target(let targetName):
-            guard let target = graph.allTargets.first(where: { $0.name == targetName }) else {
+            guard let target = info.targets.first(where: { $0.name == targetName }) else {
                 observabilityScope.emit(error: "no target named '\(targetName)'")
                 return nil
             }
-            return target.getLLBuildTargetName(config: config)
+            return target.LLBuildTargetNameByConfig[config]
         }
     }
 }
