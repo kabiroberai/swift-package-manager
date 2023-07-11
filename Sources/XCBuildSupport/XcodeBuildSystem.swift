@@ -103,7 +103,7 @@ public final class XcodeBuildSystem: SPMBuildCore.BuildSystem {
     }
 
     public func build(subset: BuildSubset) throws {
-        if buildParameters.shouldSkipBuilding {
+        guard !buildParameters.shouldSkipBuilding else {
             return
         }
 
