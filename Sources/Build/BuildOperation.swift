@@ -237,7 +237,7 @@ public final class BuildOperation: PackageStructureDelegate, SPMBuildCore.BuildS
 
     /// Perform a build using the given build description and subset.
     public func build(subset: BuildSubset) throws {
-        if buildParameters.shouldSkipBuilding {
+        guard !buildParameters.shouldSkipBuilding else {
             return
         }
 
