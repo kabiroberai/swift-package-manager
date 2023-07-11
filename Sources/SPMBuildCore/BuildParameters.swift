@@ -261,6 +261,8 @@ public struct BuildParameters: Encodable {
 
     public var debugInfoFormat: DebugInfoFormat
 
+    public var shouldSkipBuilding: Bool
+
     public init(
         dataPath: AbsolutePath,
         configuration: BuildConfiguration,
@@ -291,7 +293,8 @@ public struct BuildParameters: Encodable {
         colorizedOutput: Bool = false,
         verboseOutput: Bool = false,
         linkTimeOptimizationMode: LinkTimeOptimizationMode? = nil,
-        debugInfoFormat: DebugInfoFormat = .dwarf
+        debugInfoFormat: DebugInfoFormat = .dwarf,
+        shouldSkipBuilding: Bool = false
     ) throws {
         let triple = try destinationTriple ?? .getHostTriple(usingSwiftCompiler: toolchain.swiftCompilerPath)
 
@@ -355,6 +358,7 @@ public struct BuildParameters: Encodable {
         self.verboseOutput = verboseOutput
         self.linkTimeOptimizationMode = linkTimeOptimizationMode
         self.debugInfoFormat = debugInfoFormat
+        self.shouldSkipBuilding = shouldSkipBuilding
     }
 
     public func withDestination(_ destinationTriple: Triple) throws -> BuildParameters {
@@ -398,7 +402,8 @@ public struct BuildParameters: Encodable {
             linkerDeadStrip: self.linkerDeadStrip,
             colorizedOutput: self.colorizedOutput,
             verboseOutput: self.verboseOutput,
-            linkTimeOptimizationMode: self.linkTimeOptimizationMode
+            linkTimeOptimizationMode: self.linkTimeOptimizationMode,
+            shouldSkipBuilding: self.shouldSkipBuilding
         )
     }
 
