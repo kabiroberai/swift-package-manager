@@ -62,7 +62,13 @@ enum TestingSupport {
         throw InternalError("XCTestHelper binary not found, tried \(triedPaths.map { $0.pathString }.joined(separator: ", "))")
     }
 
-    static func getTestSuites(in testProducts: [BuiltTestProduct], swiftTool: SwiftTool, enableCodeCoverage: Bool, shouldSkipBuilding: Bool, sanitizers: [Sanitizer]) throws -> [AbsolutePath: [TestSuite]] {
+    static func getTestSuites(
+        in testProducts: [BuiltTestProduct],
+        swiftTool: SwiftTool,
+        enableCodeCoverage: Bool,
+        shouldSkipBuilding: Bool,
+        sanitizers: [Sanitizer]
+    ) throws -> [AbsolutePath: [TestSuite]] {
         let testSuitesByProduct = try testProducts
             .map {(
                 $0.bundlePath,
