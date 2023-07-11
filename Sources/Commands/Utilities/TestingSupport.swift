@@ -93,7 +93,13 @@ enum TestingSupport {
     /// - Throws: TestError, SystemError, TSCUtility.Error
     ///
     /// - Returns: Array of TestSuite
-    static func getTestSuites(fromTestAt path: AbsolutePath, swiftTool: SwiftTool, enableCodeCoverage: Bool, shouldSkipBuilding: Bool, sanitizers: [Sanitizer]) throws -> [TestSuite] {
+    static func getTestSuites(
+        fromTestAt path: AbsolutePath,
+        swiftTool: SwiftTool,
+        enableCodeCoverage: Bool,
+        shouldSkipBuilding: Bool,
+        sanitizers: [Sanitizer]
+    ) throws -> [TestSuite] {
         // Run the correct tool.
         #if os(macOS)
         let data: String = try withTemporaryFile { tempFile in
