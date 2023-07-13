@@ -31,6 +31,7 @@ add_library(Basics
   FileSystem/TemporaryFile.swift
   FileSystem/TSCAdapters.swift
   FileSystem/VFSOverlay.swift
+  GitURL.swift
   HTTPClient/HTTPClient.swift
   HTTPClient/HTTPClientConfiguration.swift
   HTTPClient/HTTPClientError.swift

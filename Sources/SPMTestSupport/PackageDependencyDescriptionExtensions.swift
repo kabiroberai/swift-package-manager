@@ -45,7 +45,7 @@ public extension PackageDependency {
 
     static func remoteSourceControl(identity: PackageIdentity? = nil,
                                     deprecatedName: String? = nil,
-                                    url: URL,
+                                    url: GitURL,
                                     requirement: SourceControl.Requirement,
                                     productFilter: ProductFilter = .everything
     ) -> Self {

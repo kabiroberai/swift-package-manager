@@ -10,6 +10,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+import struct Basics.GitURL
 import struct Foundation.URL
 import struct TSCUtility.Version
 
@@ -35,14 +36,14 @@ public struct RegistryReleaseMetadata {
         public let description: String?
         public let licenseURL: URL?
         public let readmeURL: URL?
-        public let scmRepositoryURLs: [URL]?
+        public let scmRepositoryURLs: [GitURL]?
 
         public init(
             author: RegistryReleaseMetadata.Metadata.Author? = nil,
             description: String? = nil,
             licenseURL: URL? = nil,
             readmeURL: URL? = nil,
-            scmRepositoryURLs: [URL]?
+            scmRepositoryURLs: [GitURL]?
         ) {
             self.author = author
             self.description = description

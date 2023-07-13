@@ -127,7 +127,7 @@ extension Manifest {
 
     public static func createRemoteSourceControlManifest(
         displayName: String,
-        url: URL,
+        url: GitURL,
         path: AbsolutePath,
         defaultLocalization: String? = nil,
         platforms: [PlatformDescription] = [],
