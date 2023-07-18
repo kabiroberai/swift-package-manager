@@ -33,6 +33,14 @@ public final class UserToolchain: Toolchain {
     /// Path of the `swiftc` compiler.
     public let swiftCompilerPath: AbsolutePath
 
+    public var swiftResourcesPath: AbsolutePath? {
+        destination.pathsConfiguration.swiftResourcesPath
+    }
+
+    public var swiftStaticResourcesPath: AbsolutePath? {
+        destination.pathsConfiguration.swiftStaticResourcesPath
+    }
+
     /// Additional flags to be passed to the build tools.
     public var extraFlags: BuildFlags
 

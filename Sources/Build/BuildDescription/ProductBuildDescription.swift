@@ -189,6 +189,7 @@ public final class ProductBuildDescription: SPMBuildCore.ProductBuildDescription
             derivedProductType = self.product.type
         }
 
+        var hasStaticStdlib = false
         switch derivedProductType {
         case .macro:
             throw InternalError("macro not supported") // should never be reached
@@ -220,6 +221,7 @@ public final class ProductBuildDescription: SPMBuildCore.ProductBuildDescription
                     self.observabilityScope.emit(.swiftBackDeployError)
                 } else if self.buildParameters.triple.isSupportingStaticStdlib {
                     args += ["-static-stdlib"]
+                    hasStaticStdlib = true
                 }
             }
             args += ["-emit-executable"]
@@ -243,6 +245,10 @@ public final class ProductBuildDescription: SPMBuildCore.ProductBuildDescription
             }
         case .plugin:
             throw InternalError("unexpectedly asked to generate linker arguments for a plugin product")
+        }
+
+        if let resourcesPath = self.buildParameters.toolchain.swiftResourcesPath(static: hasStaticStdlib) {
+            args += ["-resource-dir", resourcesPath.pathString]
         }
 
         // Set rpath such that dynamic libraries are looked up
