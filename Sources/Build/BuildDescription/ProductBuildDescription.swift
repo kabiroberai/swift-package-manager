@@ -251,6 +251,12 @@ public final class ProductBuildDescription: SPMBuildCore.ProductBuildDescription
             args += ["-resource-dir", resourcesPath.pathString]
         }
 
+        // clang resources are always in lib/swift/
+        if let dynamicResourcesPath = self.buildParameters.toolchain.swiftResourcesPath {
+            let clangResourcesPath = dynamicResourcesPath.appending("clang")
+            args += ["-Xclang-linker", "-resource-dir", "-Xclang-linker", clangResourcesPath.pathString]
+        }
+
         // Set rpath such that dynamic libraries are looked up
         // adjacent to the product.
         if self.buildParameters.triple.isLinux() {
